@@ -16,13 +16,13 @@ import json
 # define Mandatory and Optional Arguments for the script
 parser = argparse.ArgumentParser (description = "Parser of training script")
 
-parser.add_argument ('data_dir', help = 'Provide data directory. Mandatory argument', type = str)
-parser.add_argument ('--save_dir', help = 'Provide saving directory. Optional argument', type = str)
-parser.add_argument ('--arch', help = 'Vgg13 can be used if this argument specified, otherwise Alexnet will be used', type = str)
-parser.add_argument ('--lrn', help = 'Learning rate, default value 0.001', type = float)
-parser.add_argument ('--hidden_units', help = 'Hidden units in Classifier. Default value is 2048', type = int)
-parser.add_argument ('--epochs', help = 'Number of epochs', type = int)
-parser.add_argument ('--GPU', help = "Option to use GPU", type = str)
+parser.add_argument ('data_dir', nargs = '*', action = 'store', default = './flowers/', type = str)
+parser.add_argument ('--save_dir', dest = 'save_dir', action='store', default = './checkpoint.pth, type = str)
+parser.add_argument ('--arch', dest = 'arch', action = 'store', default = 'vgg16', type = str)
+parser.add_argument ('--lrn', dest = 'learning_rate', action = 'store', default = 0.01, type = float)
+parser.add_argument ('--hidden_units', type = int, dest = 'hidden_units', action = 'store', default = 120, type = int)
+parser.add_argument ('--epochs', dest = 'epochs', action = 'store', type = int, default = 10, type = int)
+parser.add_argument ('--GPU', dest = 'gpu', action = 'store', default = 'gpu', type = str)
 
 #setting values data loading
 args = parser.parse_args ()
