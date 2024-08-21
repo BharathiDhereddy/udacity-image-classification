@@ -14,13 +14,13 @@ import argparse
 import json
 
 # define Mandatory and Optional Arguments for the script
-parser = argparse.ArgumentParser (description = "Parser of prediction script")
+parser = argparse.ArgumentParser(description='predict-file')
 
-parser.add_argument ('image_dir', help = 'Provide path to image. Mandatory argument', type = str)
-parser.add_argument ('load_dir', help = 'Provide path to checkpoint. Mandatory argument', type = str)
-parser.add_argument ('--top_k', help = 'Top K most likely classes. Optional', type = int)
-parser.add_argument ('--category_names', help = 'Mapping of categories to real names. JSON file name to be provided. Optional', type = str)
-parser.add_argument ('--GPU', help = "Option to use GPU. Optional", type = str)
+parser.add_argument('image_dir', type=str, default='flowers/test/99/image_07871.jpg')
+parser.add_argument('load_dir', type=str, default='checkpoint.pth')
+parser.add_argument('--top_k', type=int, default=5, dest="top_k")
+parser.add_argument('--category_names', dest="category_names", default='cat_to_name.json')
+parser.add_argument('--GPU', default="gpu", dest="gpu", type=str)
 
 # a function that loads a checkpoint and rebuilds the model
 def loading_model (file_path):
@@ -28,7 +28,7 @@ def loading_model (file_path):
     if checkpoint ['arch'] == 'alexnet':
         model = models.alexnet (pretrained = True)
     else: #vgg13 as only 2 options available
-        model = models.vgg13 (pretrained = True)
+        model = models.vgg16 (pretrained = True)
     model.classifier = checkpoint ['classifier']
     model.load_state_dict (checkpoint ['state_dict'])
     model.class_to_idx = checkpoint ['mapping']
